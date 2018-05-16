@@ -49,7 +49,7 @@ namespace BracketMatcher
                     }
                     else
                     {
-                        return (int)bracketStack.Peek();
+                        return i;
                     }
                 }
             }

@@ -125,7 +125,7 @@ namespace BracketMatcher.Tests
         public void WhenMixedBrackets_ReturnIndexOfFirstMissed()
         {
         //Given
-        var expected = 4;
+        var expected = 5;
         var actual = sub.Match("012([)]");
         //When
         
