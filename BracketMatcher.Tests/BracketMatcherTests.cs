@@ -121,12 +121,15 @@ namespace BracketMatcher.Tests
             Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void WhenMixedBrackets_ReturnIndexOfFirstMissed()
+        [Theory]
+        [InlineData("012([)]",5)]
+        [InlineData("012([{})87",7)]
+        [InlineData("012([34]{56(78)})(",17)]
+        [InlineData("012([34]{56(78)})()[])9",21)]
+        public void WhenMixedBrackets_ReturnIndexOfFirstMissed(string str, int expected)
         {
         //Given
-        var expected = 5;
-        var actual = sub.Match("012([)]");
+        var actual = sub.Match(str);
         //When
         
         //Then
