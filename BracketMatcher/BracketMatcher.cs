@@ -9,29 +9,25 @@ namespace BracketMatcher
     {
         public int Match(string str)
         {
-            var bracketStack = new Stack();
+            var simpleStack = new SimpleStack<int>();
             var simpleBracketMatcher = new SimpleBracketMatcher(str);
-            if (str == "")
-            {
-                return 0;
-            }
 
-            for (int i = 0; i < simpleBracketMatcher.Brackets.Count; i++)
+            for (int i = 0; i < simpleBracketMatcher.BracketsCount(); i++)
             {
                 if (simpleBracketMatcher.IsOpenBracket(i))
                 {
-                    bracketStack.Push(i);
+                    simpleStack.Push(i);
                 }
-                if (simpleBracketMatcher.IsCloseBracket(i))
+                else if (simpleBracketMatcher.IsCloseBracket(i))
                 {
-                    if (bracketStack.Count == 0)
+                    if (simpleStack.Count() == 0)
                     {
                         return i;
                     }
 
-                    if (simpleBracketMatcher.IsMatch((int)bracketStack.Peek(), i))
+                    if (simpleBracketMatcher.IsMatch((int)simpleStack.Peek(), i))
                     {
-                        bracketStack.Pop();
+                        simpleStack.Pop();
                     }
                     else
                     {
@@ -39,9 +35,9 @@ namespace BracketMatcher
                     }
                 }
             }
-            if (bracketStack.Count > 0)
+            if (simpleStack.Count() > 0)
             {
-                return (int)bracketStack.Pop();
+                return (int)simpleStack.Pop();
             }
 
             return 0;
