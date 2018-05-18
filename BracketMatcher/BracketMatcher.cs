@@ -12,34 +12,40 @@ namespace BracketMatcher
             var simpleStack = new SimpleStack<int>();
             var simpleBracketMatcher = new SimpleBracketMatcher(str);
 
-            for (int i = 0; i < simpleBracketMatcher.BracketsCount(); i++)
-            {
-                if (simpleBracketMatcher.IsOpenBracket(i))
-                {
-                    simpleStack.Push(i);
-                }
-                else if (simpleBracketMatcher.IsCloseBracket(i))
-                {
-                    if (simpleStack.Count() == 0)
-                    {
-                        return i;
-                    }
+            return MatchBracket(simpleStack,simpleBracketMatcher,0);
+        }
 
-                    if (simpleBracketMatcher.IsMatch((int)simpleStack.Peek(), i))
+        public int MatchBracket(SimpleStack<int> stack, SimpleBracketMatcher bracketString, int index)
+        {
+            if(index < bracketString.BracketsCount())
+            {
+                if(!bracketString.IsCloseBracket(index))
+                {
+                    if(bracketString.IsOpenBracket(index))
+                        stack.Push(index);
+                    
+                    index++;
+                    return MatchBracket(stack,bracketString,index);
+                }
+                else
+                {
+                    if (stack.Count() == 0 || !bracketString.IsMatch(stack.Peek(), index))
                     {
-                        simpleStack.Pop();
+                        return index;
                     }
                     else
                     {
-                        return i;
+                        index++;
+                        stack.Pop();
+                        return MatchBracket(stack,bracketString,index);
                     }
                 }
             }
-            if (simpleStack.Count() > 0)
+                        
+            if (stack.Count() > 0)
             {
-                return (int)simpleStack.Pop();
+                return stack.Pop();
             }
-
             return 0;
         }
     }
