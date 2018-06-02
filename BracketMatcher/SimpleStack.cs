@@ -56,11 +56,7 @@ namespace BracketMatcher
 
         public int Count()
         {
-            if(_stackPointer == 0)
-            {
-                return 0;
-            }
-            return _stackPointer + 1;
+            return _stackPointer == 0 ? 0 : _stackPointer + 1;
         }
     }
 }
